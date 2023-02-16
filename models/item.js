@@ -20,11 +20,13 @@ const ItemSchema = new Schema({
     }],
     price : {
         type: Number,
-        min: 0
+        min: 0,
+        required: true
     },
     numberInStock: {
         type: Number,
-        min: 0
+        min: 0,
+        required: true
     }
 });
 
