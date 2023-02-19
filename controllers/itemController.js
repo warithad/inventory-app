@@ -1,13 +1,30 @@
 const Item = require('../models/item')
 
+// /items
 exports.items_list_get = (req, res) =>{
-    res.send('NOT IMPLEMENTED: items list GET');
+    Item.find()
+        .sort({'name': 1})
+        .exec(function (err, list_items){
+            if(err){
+                return next(err);
+            }
+            res.render('item_list', {title: 'Item List', item_list: list_items});
+        })
 }
 
-exports.item_detail_get = (req, res) => {
-    res.send('NOT IMPLEMENTED: item detail GET');
+// /item:id
+exports.item_detail_get = (req, res, next) => {
+    Item.findById(req.params.id)
+        .populate('category')
+        .exec(function (err, item){
+            if(err){
+                return next(err);
+            }
+            res.render('item_detail', {title: 'Item', item: item})
+        })
 }
 
+// /item/create
 exports.item_create_get = (req, res) =>{
     res.send('NOT IMPLEMENTED: item create GET');
 }
