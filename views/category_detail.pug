@@ -2,6 +2,7 @@ extends layout
 
 block content 
     h1= title
+    p #[strong Category Name:] #{category.name}
     p #[strong Description:] #{category.description}
     ul 
         each item in category_items
