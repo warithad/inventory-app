@@ -55,11 +55,12 @@ exports.category_create_get = (req, res) =>{
 
 exports.category_create_post = [
     body('name', 'Category name required').trim().isLength({min: 1}).escape(),
+    body('description').trim().escape(),
 
     (req, res, next) =>{
         const errors = validationResult(req);
 
-        const category = new Category({name: req.body.name});
+        const category = new Category({name: req.body.name, description: req.body.description});
 
         if(!errors.isEmpty()){
             res.render('category_form', {
