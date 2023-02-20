@@ -1,4 +1,6 @@
+const { body } = require('express-validator');
 const Item = require('../models/item')
+const Category = require('../models/category')
 
 // /items
 exports.items_list_get = (req, res) =>{
@@ -26,13 +28,22 @@ exports.item_detail_get = (req, res, next) => {
 
 // /item/create
 exports.item_create_get = (req, res) =>{
-    res.send('NOT IMPLEMENTED: item create GET');
+    Category.find()
+        .sort({'name': 1})
+        .exec(function (err, list_categories){
+            if(err){
+                return next(err);
+            }
+            res.render('item_form', {
+                title: 'Create Item',
+                category_list: list_categories
+            })
+        })
 }
 
-exports.item_create_post = (req, res) =>{
-    res.send('NOT IMPLEMENTED: item create POST');
-}
-
+exports.item_create_post = [
+    body()
+]
 exports.item_update_get = (req, res) =>{
     res.send('NOT IMPLEMENTED: item update GET');
 }
